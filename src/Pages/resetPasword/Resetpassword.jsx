@@ -33,6 +33,7 @@ class ResetPassword extends Component {
         passwordError: "",
         password: "",
         conformPassword: "",
+        token :"",
     };
   }
 
@@ -65,38 +66,7 @@ class ResetPassword extends Component {
     }
   };
 
-  // Reset = () => {
-  //   this.validator();
-  //   let data = {
-  //     newPassword: this.state.password,
-  //   };
-  //   const id = JSON.parse(localStorage.getItem("id"));
-  //   if (this.state.helperTextpassowrd === "") {
-  //     if (this.state.pass === true) {
-  //       userServices.resetPasword(data, id).then((response) => {
-  //         if (response.statusText === "No Content") {
-  //           this.setState({
-  //             snackbaropen: true,
-  //             snackbarmsg: "Succefully changed.",
-  //           });
-  //           this.props.history.push({
-  //             pathname: "/login",
-  //           });
-  //         } else {
-  //           this.setState({
-  //             snackbarmsg: "Password not successfull",
-  //             snackbaropen: true,
-  //           });
-  //         }
-  //       });
-  //     }
-  //   } else {
-  //     this.setState({
-  //       snackbarmsg: "Make sure password and confirm is correct",
-  //       snackbaropen: true,
-  //     });
-  //   }
-  // };
+  
   validator = () => {
     if (this.state.password !== "") {
       if (

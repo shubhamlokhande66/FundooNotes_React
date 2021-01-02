@@ -3,6 +3,7 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Services from "../../Service/UserService";
 import Checkbox from "@material-ui/core/Checkbox";
+import Snackbar from "@material-ui/core/Snackbar";
 import "./signIn.css";
 
 export default class signIn extends React.Component {
@@ -16,6 +17,8 @@ export default class signIn extends React.Component {
     passwordError: "",
     passwordFlag: false,
     showPassword: false,
+    snackbarOpen: false,
+      snackbarMessage: "",
   };
   }
 
@@ -69,6 +72,13 @@ export default class signIn extends React.Component {
 
     return isError;
   };
+  SnackbarClose = (e) => {
+    this.setState({ snackbarOpen: false });
+  };
+
+  handleCloseSnackbar = () => {
+    this.setState({ snackbarOpen: false });
+  };
 
   onSubmit = (event) => {
     event.preventDefault();
@@ -87,18 +97,25 @@ export default class signIn extends React.Component {
         password: this.state.password,
       };
       Services
-        .login(loginData)
-        .then((loginData) => {
-        console.log("Login Successful "+JSON.stringify(loginData.data))
-        let data = JSON.stringify(loginData.data);
-        localStorage.setItem("fundooStorage",data);
+        .userlogin(loginData)
+        .then((response) => {
+          if (response.status === 200) {
+            this.setState({
+              snackbarOpen: true,
+              snackbarMessage: "Login Succesfully.",
+            });
+            localStorage.setItem("token", response.data.id);
+            setTimeout(() => {
+              this.props.history.push("/appbar");
+            }, 2000);
+          } else {
+            this.setState({
+              snackbarOpen: true,
+              snackbarMessage: "Enter correct credentials",
+            });
+          }
         })
-        .catch((loginData) => {
-          let obj = JSON.stringify(loginData);
-          console.log("Login Failed" + obj);
-        });
-    } else {
-      console.log("Login Failed");
+        .catch();
     }
   };
 
@@ -119,9 +136,18 @@ export default class signIn extends React.Component {
           <span className="signIn">Sign in</span>
           Use your Fundoo Account
           <form className="loginForm">
+          <Snackbar
+                  anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "center",
+                  }}
+                  open={this.state.snackbarOpen}
+                  autoHideDuration={3000}
+                  onClose={() => this.setState({ snackbarOpen: false })}
+                  message={this.state.snackbarMessage}
+                ></Snackbar>
             <div className="inputfield">
               <TextField
-                size="small"
                 className="input"
                 label="Email"
                 variant="outlined"
@@ -134,7 +160,6 @@ export default class signIn extends React.Component {
             </div>
             <div className="passField">
               <TextField
-                size="small"
                 className="input"
                 label="Password"
                 type={this.state.showPassword ? "text" : "password"}

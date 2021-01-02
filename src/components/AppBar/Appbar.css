@@ -1,0 +1,40 @@
+.topBar{
+    display: flex;
+    justify-content: space-between;
+}
+.headerIcon{
+   width: 45px;
+}
+.startOptions{
+    display: flex;
+    align-items: center;
+}
+.buttonContainer{
+    display: flex;
+}
+.headerTitle{
+    margin: 1%;
+    color: #5f6368;
+    font-size: 22px;
+    font-family: 'Product Sans',Arial,sans-serif;
+    display: inline-block;
+}
+.search{
+    height: 9vh;
+    /* margin-left: 6%; */
+    width: 50%;
+    display: flex;
+    align-items: center;
+    background-color: rgb(238, 238, 238);
+    border-radius: 8px;
+}
+.searchIcon{
+   margin-left: 3%;
+}
+.searchInput{
+    margin-left:2% ;
+    width: 80%;
+}
+.appsContainer{
+    display: flex;
+}
