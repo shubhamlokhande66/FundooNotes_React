@@ -63,12 +63,12 @@ class Registration extends Component {
     if (errors.email || this.state.email === "") {
       this.setState({
         snackbarOpen: true,
-        snackbarMessage: "Enter proper email-ID.   ",
+        snackbarMessage: "Please Enter the Email ",
       });
     } else if (this.state.password === "") {
       this.setState({
         snackbarOpen: true,
-        snackbarMessage: "Enter correct password",
+        snackbarMessage: "Please Enter the password",
       });
     } else {
       let data = {
@@ -114,14 +114,13 @@ class Registration extends Component {
   };
 
   onchangeFirstName = (event) => {
-    event.preventDefault();
-    this.setState({
+      this.setState({
         firstName: event.target.value,
       });
       let errors = this.state.errors;
       let validate = false;
     if (!regexvalidateName.test(this.state.firstName)) {
-        errors.firstName = "eg Shubham";
+        errors.firstName = "eg:Shubham";
         validate = true;
     } else {
         errors.firstName = "";
@@ -135,40 +134,38 @@ class Registration extends Component {
   };
 
   onchangeLastName = (event) => {
-    event.preventDefault();
-    this.setState({
+   this.setState({
         lastName: event.target.value,
       });
       let errors = this.state.errors;
       let validate = false;
     if (!regexvalidateLastName.test(this.state.lastName)) {
-        errors.lastName = "eg Shubham";
+        errors.lastName = "eg:Lokhande";
         validate = true;
     } else {
         errors.lastName = "";
     }this.setState({
         snackbarOpen: true,
-        snackbarMessage: "Enter only alphabets.   ",
+        snackbarMessage: "First Latters & reamining Small  ",
         errorValid: { lastName: validate },
         errors: { lastName: errors.lastName },
       });
     
   };
   onchangeEmail = (event) => {
-    event.preventDefault();
-    this.setState({
+   this.setState({
         email: event.target.value,
       });
       let errors = this.state.errors;
       let validate = false;
     if (!regexValidateEmail.test(this.state.email)) {
-        errors.email = "eg Shubham";
+        errors.email = "eg:shubhamlokhande@gmail.com";
         validate = true;
     } else {
         errors.email = "";
     }  this.setState({
         snackbarOpen: true,
-        snackbarMessage: "Enter only alphabets.   ",
+        snackbarMessage: "All latters Should be Small",
         errorValid: { email: validate },
         errors: { email: errors.email },
       });
@@ -177,20 +174,19 @@ class Registration extends Component {
  
 
   onchangePassword = (event) => {
-    event.preventDefault();
-    this.setState({
+   this.setState({
         password: event.target.value,
       });
       let errors = this.state.errors;
       let validate = false;
     if (!regexvalidatePassword.test(this.state.password)) {
-        errors.password = "eg Shubham";
+        errors.password = "eg:Shubham@123";
         validate = true;
     } else {
         errors.password = "";
     }this.setState({
         snackbarOpen: true,
-        snackbarMessage: "Enter only alphabets.   ",
+        snackbarMessage: "First latters Caps and Password should be MIN 8 & MAX 20 Latters",
         errorValid: { password: validate },
         errors: { password: errors.password },
       });
@@ -198,20 +194,19 @@ class Registration extends Component {
   };
 
   onchangeRePassword = (event) => {
-    event.preventDefault();
     this.setState({
         rePassword: event.target.value,
       });
       let errors = this.state.errors;
       let validate = false;
     if (!regexvalidaterePassword.test(this.state.rePassword)) {
-        errors.rePassword = "eg Shubham";
+        errors.rePassword = "eg:Shubham@123";
         validate = true;
     } else {
         errors.rePassword = "";
     }this.setState({
         snackbarOpen: true,
-        snackbarMessage: "Enter only alphabets.   ",
+        snackbarMessage: "First latters Caps and Password should be MIN 8 & MAX 20 Latters",
         errorValid: { rePassword: validate },
         errors: { rePassword: errors.rePassword },
       });

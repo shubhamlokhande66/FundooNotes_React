@@ -43,7 +43,7 @@ class ForgetPassword extends React.Component {
           } else {
             this.setState({
               snackbarOpen: true,
-              snackbarMsg: "Invalid Email-ID",
+              snackbarMsg: "Link Sent Your Resgister EmailID",
             });
           }
         })
