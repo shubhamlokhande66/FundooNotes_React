@@ -61,7 +61,6 @@ function CreateNote(props) {
       },
     },
     createNoteCloseButton: {
-    //   padding: "0.5rem 0.8rem",
       fontSize: "1.5rem",
       color: "rgba(0,0,0,0.8)",
       textTransform: "capitalize",
