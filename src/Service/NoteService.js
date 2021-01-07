@@ -1,34 +1,3 @@
-// import HttpServices from "./Http";
-// import * as noteApiConstants from "./API";
-// let baseUrl = process.env.REACT_APP_API_URL;
-
-// let getToken = (() => {
-//   let token = "";
-//   return () => {
-//     if (localStorage.getItem("token") !== null) {
-//       token = localStorage.getItem("token");
-//     }
-//     return token;
-//   };
-// })();
-
-// const token = getToken();
-
-// class NoteService {
-//   addNote(data) {
-//     return HttpServices.postApiRequest(
-//       data,
-//       baseUrl + noteApiConstants.notesApi.addNotes,
-//       token
-//     );
-//   }
-// }
-
-
-
-// export default new NoteService();
-
-
 
 import axios from 'axios'
 
