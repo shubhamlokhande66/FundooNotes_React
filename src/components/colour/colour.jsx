@@ -1,101 +1,59 @@
+
 import React, { useState } from "react";
-import { IconButton, Menu, MenuItem } from "@material-ui/core";
-import PaletteOutlinedIcon from "@material-ui/icons/PaletteOutlined";
-import Tooltip from "@material-ui/core/Tooltip";
-import { makeStyles } from "@material-ui/core/styles";
+import ColorIcon from "@material-ui/icons/ColorLensOutlined";
+import { Card, ClickAwayListener } from "@material-ui/core";
+import "./colour.css";
 
-function ColorPalletIcon(props) {
-  const useStyles = makeStyles(() => ({
-    colorBox: {
-      width: "145px",
-      height: "110px",
-      display: "flex",
-      flexDirection: "row",
-      flexWrap: "wrap",
-      padding: "4px",
-    },
-    colorOption: {
-      width: "30px",
-      height: "30px",
-      borderRadius: "50%",
-      border: "1px solid grey",
-      margin: "0.02rem 0.1rem",
-    },
-  }));
+const ColorList = ({ setBgColor }) => {
+  const [showColorList, setShowColorList] = useState(false);
 
-  const classes = useStyles();
-
-  const colors = [
-    "#ffffff",
-    "#f28b82",
-    "#fbbc04",
-    "#fff475",
-    "#ccff90",
-    "#a7ffeb",
-    "#cbf0f8",
-    "#aecbfa",
-    "#d7aefb",
-    "#fdcfe8",
-    "#e6c9a8",
-    "#e8eaed",
+  const DATA = [
+    { title: "MAROON", id: "#800000" },
+    { title: "WHITE", id: "#FFFFFF" },
+    { title: "salmon5", id: "#CFAFAF" },
+    { title: "dustyrose", id: "#D0C0C0" },
+    { title: "indianred4", id: "#DBA9A9" },
+    { title: "brown", id: "#DF9D9D" },
+    { title: "OLIVE", id: "#808000" },
+    { title: "LIME", id: "#00FF00" },
+    { title: "GREEN", id: "#008000" },
+    { title: "AQUA", id: "#00FFFF" },
+    { title: "TEAL", id: "#008080" },
+    { title: "NAVY", id: "#000080" },
+    { title: "INDIANRED", id: "#CD5C5C" },
+    { title: "rosybrown", id: "#CFAFAF" },
+    { title: "indianred", id: "#EABCBC" },
+    { title: "firebrick5", id: "#E69898" },
+    { title: "strawberry", id: "#EDA2A2" },
+    { title: "bloodred", id: "#FF6666" },
   ];
-  const [anchorEl, setAnchorEl] = useState(null);
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
+  const selectColor = (value) => {
+    setBgColor(value);
   };
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const displayColorPallet = (
-    <Menu
-      id="simple-menu"
-      anchorEl={anchorEl}
-      open={Boolean(anchorEl)}
-      onClose={handleClose}
-      anchorOrigin={{
-        vertical: "top",
-        horizontal: "left",
-      }}
-      transformOrigin={{
-        vertical: "bottom",
-        horizontal: "left",
-      }}
-      getContentAnchorEl={null}
-    >
-      <MenuItem className={classes.colorBox}>
-        {colors.map((color, index) => {
-          return (
-            <IconButton
-              key={index}
-              style={{ backgroundColor: color }}
-              className={classes.colorOption}
-              onClick={() => {
-                props.setColor(color);
-                handleClose();
-              }}
-            ></IconButton>
-          );
-        })}
-      </MenuItem>
-    </Menu>
-  );
   return (
-    <>
-      {displayColorPallet}
-      <Tooltip title="Change colour" placement="bottom">
-        <IconButton
-          aria-controls="simple-menu"
-          aria-haspopup="true"
-          onClick={handleClick}
-          className={props.buttonClassName}
+    <ClickAwayListener onClickAway={()=>setShowColorList(false)}>
+    <div>
+      <ColorIcon onClick={() => setShowColorList(!showColorList)} className="colorIcon"/>
+      {showColorList ? (
+        <Card
+          className="colorCardContainer"
+          style={{ width: 200, height: 150 }}
         >
-          <PaletteOutlinedIcon className={props.iconClassName} />
-        </IconButton>
-      </Tooltip>
-    </>
+          {DATA.map((item, index) => (
+            <button
+              onClick={() => selectColor(item.id)}
+              key={index}
+              className="button"
+              style={{ backgroundColor: item.id }}
+            ></button>
+          ))}
+        </Card>
+      ) : null}
+    </div>
+    </ClickAwayListener>
   );
-}
-export default ColorPalletIcon;
+};
+
+export default ColorList;
