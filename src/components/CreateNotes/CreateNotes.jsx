@@ -1,178 +1,245 @@
-import React, { useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
+import "./Create.css";
 import {
-  Paper,
-  InputBase,
-  Button,
-  IconButton,
-  Tooltip,
   Avatar,
+  Backdrop,
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  Chip,
+  Fade,
+  InputBase,
+  makeStyles,
+  Modal,
 } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
-import NoteServices from "../../Service/NoteService.js";
-import ColorPalletIcon from "../../components/colour/colour";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import AddAlertIcon from '@material-ui/icons/AddAlert';
-import PersonAddIcon from '@material-ui/icons/PersonAddOutlined';
-import ImageOutlinedIcon from '@material-ui/icons/ImageOutlined';
-import SystemUpdateAltOutlinedIcon from '@material-ui/icons/SystemUpdateAltOutlined';
-import MoreVertOutlinedIcon from '@material-ui/icons/MoreVertOutlined';
-import "./Create.css"
-function CreateNote(props) {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [color, setColor] = useState("#FFFFFF");
-  const [loading, setLoading] = useState(false);
-  const [token, settoken]=useState([]);
+import CollaboratorIcon from "@material-ui/icons/PersonAddOutlined";
+import ImageIcon from "@material-ui/icons/ImageOutlined";
+import ArchiveFilled from "@material-ui/icons/Archive";
+import ArchiveOutlined from "@material-ui/icons/ArchiveOutlined";
+import {addReminder, saveNotes, updateNoteArchive, updateNoteColor, updateNoteTitleDescription } from "../../Service/NoteService";
+import Reminder from "../Reminder/Reminder";
+import AccessTimeIcon from "@material-ui/icons/AccessTime";
+import ColorList from "../colour/colour";
+import MoreOptions from "../MoreIcon/MoreIcon";
+import Pin from "../../images/Pin.png";
+import PinOutlined from "../../images/PinOutlined.png";
 
-  const useStyles = makeStyles((theme) => ({
-    createNote: {
-      display: "inline-flex",
-      width: "50%",
-      background: color,
-      padding: "0.3rem 0.5rem",
-      margin: "1.6rem 0",
-      boxShadow: "1px 1px 4px grey",
-      flexDirection: "column",
-      [theme.breakpoints.down(960)]: {
-        width: "70%",
-      },
-      [theme.breakpoints.down(540)]: {
-        width: "85%",
-      },
-      [theme.breakpoints.down(360)]: {
-        width: "95%",
-      },
-    },
-    createNoteTittle: {
-      padding: "0.1rem 0.3rem",
-      display: "flex",
-      justifyContent: "space-between",
-    },
-    createNoteDescription: {
-      padding: "0.5rem 0.3rem 0.8rem 0.3rem",
-    },
-    createNoteList: {
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center",
-      paddingRight: "0.5rem",
-      [theme.breakpoints.down(380)]: {
-        flexDirection: "column",
-      },
-    },
-    createNoteCloseButton: {
-      fontSize: "1.5rem",
-      color: "rgba(0,0,0,0.8)",
-      textTransform: "capitalize",
-      [theme.breakpoints.down(460)]: {
-        // padding: "0.2rem",
-      },
-    },
-    
-    createNoteListIconButton: {
-      [theme.breakpoints.down(540)]: {
-        padding: "0.3rem",
-      },
-    },
-    createNoteListIcons: {
-      width: "1.2rem",
-      height: "1.2rem",
-      color: "#202124",
-      opacity: "0.71",
-    },
-    
-  }));
+import moment from "moment";
+import ListItem from "../Setlist/Setlist";
 
-  const classes = useStyles();
 
- 
-  let addNote = () => { 
-    const data = new FormData();
-    data.append("title", title);
-    data.append("description", description);
-    data.append("color", color);
-    data.append("token" , token);
-    if (title !== "" && description !== "") {
-      setLoading(true);
-      NoteServices.addNote(data ,props.token)
-        .then(() => {
-          setLoading(false);
+const Styles = makeStyles({
+  root: {
+    padding: 0,
+  },
+});
 
-          props.getAllNotes();
+const CreateNote = ({ collabUser, setShowCard, item, setIsModalOpen, setRefresh, setShowCheckBox, showCheckBox }) => {
+  const classes = Styles();
+  const [title, setTitle] = useState(item !== undefined ? item.title : '');
+  const [description, setDescription] = useState(item !== undefined ? item.description : '');
+  const [dateTimeChip, setDateTimeChip] = useState("");
+  const [displayDateTime, setDisplayDateTime] = useState("")
+  const [isArchived, setIsArchived] = useState(item !== undefined ? item.isArchived : false);
+  const [bgColor, setBgColor] = useState("");
+  const [itemBgColor, setItemBgColor] = useState(item !== undefined ? item.color : null);
+  const [showLabels, setShowLabels] = useState([]);
+  const [isPined, setIsPined] = useState(item !== undefined ? item.isPined : false);
+  const [isCollabModalOpen, setIsCollabModalOpen] = useState(false)
+  const [addCollabUser, setAddCollabUser] = useState([])
+  const [saveItemList, setSaveItemList] = useState([])
+  var labelId = [];
+  var noteId = [];
+  noteId.push(item !== undefined ? item.id : null);
 
-        })
-        .catch(() => {
-          setLoading(false);
+  useEffect(() => {
+    if(item === undefined){
+      setItemBgColor(bgColor)
+    }
+    if (bgColor !== "" && item !== undefined) {
+      setItemBgColor(bgColor);
+      let data = {
+        color: bgColor,
+        noteIdList: noteId,
+      };
+      updateNoteColor(data).catch((err) => {
+        console.warn("error", err);
+      });
+      setBgColor("");
+    }
+  }, [bgColor, noteId, itemBgColor, item]);
+
+  const saveNote = () => {
+    setShowCheckBox(true)
+    if (title !== '') {
+      let formData = new FormData();
+      formData.append("title", title);
+      formData.append("description", description);
+      formData.append("checklist", JSON.stringify(saveItemList))
+      formData.append("reminder", dateTimeChip);
+      formData.append("isPined", isPined)
+      formData.append("isArchived", isArchived);
+      formData.append("labelIdList", JSON.stringify(labelId));
+      formData.append("collaberators", JSON.stringify(collabUser))
+      formData.append("color", bgColor);
+      saveNotes(formData)
+        .catch((err) => {
+          console.warn("error", err);
         });
-    } else {
     }
   };
 
+  
+
+  
 
   return (
-    <>
-      {loading ? <CircularProgress /> : null}
-      <Paper className={classes.createNote}>
-        <div className={classes.createNoteTittle}>
+    <div className="mainContainer">
+      <Card className="cardContainer2" style={{ backgroundColor: itemBgColor }}>
+        <CardContent
+          className="subCardContainer2"
+          classes={{ root: classes.root }}
+        >
           <InputBase
-            placeholder=" Title"
-            fullWidth
-            onChange={(e) => {
-              setTitle(e.currentTarget.value);
-            }}
+            value={title}
+            placeholder="Titile"
+            className="inputBase"
+            onChange={(e) => setTitle(e.target.value)}
+            multiline
           />
-        </div>
-        <InputBase
-          multiline={true}
-          rowsMax={20}
-          placeholder=" Take a note..."
-          fullWidth
-          className={classes.createNoteDescription}
-          onChange={(e) => {
-            setDescription(e.currentTarget.value);
-          }}
-        />
-        <div className={classes.createNoteList}>
-          <div>
-          <IconButton aria-label="open drawer">
-              <AddAlertIcon />
-            </IconButton>
-            <IconButton aria-label="open drawer">
-              <PersonAddIcon />
-            </IconButton>
-
-            <ColorPalletIcon
-              buttonClassName={classes.createNoteListIconButton}
-              iconClassName={classes.createNoteListIcons}
-              setColor={setColor}
+          {isPined ? (
+            <img
+              src={Pin}
+              style={{ width: '20px', height: '15px', cursor: 'pointer' }}
+              alt="pin"
+              onClick={() => setIsPined(!isPined)}
             />
-            <IconButton aria-label="open drawer">
-              <ImageOutlinedIcon />
-            </IconButton>
-            <IconButton aria-label="open drawer">
-              <SystemUpdateAltOutlinedIcon />
-            </IconButton>
-            <IconButton aria-label="open drawer">
-              <MoreVertOutlinedIcon />
-            </IconButton>
-           
-          </div>
-          
-          <Button
-         className="createNoteCloseButton"
-            className={classes.createNoteCloseButton}
-            onClick={() => {
-                
-              addNote();
-              props.setShowMiniCreateNote();
-            }}
-          > 
-
-           <h6>Close</h6> 
-          </Button>
+          ) : (
+            <img
+              style={{ width: '20px', height: '15px', cursor: 'pointer' }}
+              alt="unPin"
+              src={PinOutlined}
+              onClick={() => setIsPined(!isPined)}
+            />
+          )}
+        </CardContent>
+        <CardContent className="discription" classes={{ root: classes.root }}>
+         {showCheckBox || item !== undefined?
+          <InputBase
+            value={description}
+            placeholder="Take a notes..."
+            className="inputBase"
+            onChange={(e) => setDescription(e.target.value)}
+            multiline
+          /> :(
+            item === undefined &&
+            <ListItem setSaveItemList={setSaveItemList}/>
+          )}
+          {displayDateTime !== "" ? (
+            <Chip
+              icon={<AccessTimeIcon />}
+              label={displayDateTime}
+              clickable
+              className="createDisplayDateTime"
+              onDelete={handleDeleteChip}
+            />
+          ) : null}
+          {item !== undefined && displayDateTime === ""
+            ? item.reminder.map((item, index)=>{
+              let data = handleDateAndTime(item)
+              return(
+                <Chip 
+                  avatar={<AccessTimeIcon/>}
+                  key={index} 
+                  label={data}/>
+                )})
+            : null
+          }
+          {showLabels.length ? (
+            <div>
+              {showLabels.map((item, index) => (
+                <Chip className="showLabel" key={index} label={item.value} />
+              ))}
+            </div>
+          ) : null}
+          {item !== undefined && showLabels.length === 0 ? (
+            <div>
+              {item.noteLabels.map((item, index) => (
+                <Chip className="showLabel" key={index} label={item.label} />
+              ))}
+            </div>
+          ) : null}
+          {collabUser !== undefined && (
+            <div>
+              {collabUser.map((item,index)=>(
+                <Avatar key={index}>{item.firstName.slice(0,1)}</Avatar>
+              ))}
+            </div>
+          )}
+          {item !== undefined && collabUser === undefined ? (
+            <div>
+              {item.collaborators.map((item,index)=>(
+                <Avatar key={index}>{item.firstName.slice(0,1)}</Avatar>
+              ))}
+            </div>
+          ) : null}
+          {addCollabUser !== undefined && (
+            <div>
+              {addCollabUser.map((item,index)=>(
+                <Avatar key={index}>{item.firstName.slice(0,1)}</Avatar>
+              ))}
+            </div>
+          )}
+        </CardContent>
+        <div className="actionStyle">
+          <CardActions className="createOptions">
+            <div className="iconMargin">
+            <Reminder setDateTimeChip={setDateTimeChip} setDisplayDateTime={setDisplayDateTime} />
+            </div>
+            <div className="iconMargin">
+              <CollaboratorIcon className="iconStyle" onClick={() => item !== undefined ? setIsCollabModalOpen(true) : setShowCard("collaborator")} />
+            </div>
+            <div className="iconMargin">
+            <ColorList setBgColor={setBgColor} />
+            </div>
+            <div className="iconMargin">
+              <ImageIcon className="iconStyle" />
+            </div>
+            <div className="iconMargin" onClick={() => item !==undefined ? handleNoteArchive(!isArchived) : setIsArchived(!isArchived)}>
+              {isArchived ? (
+                <ArchiveFilled className="iconStyle" />
+              ) : (
+                <ArchiveOutlined className="iconStyle" />
+              )}
+            </div>
+            <MoreOptions setShowLabels={setShowLabels} setShowCheckBox={setShowCheckBox}/>
+          </CardActions>
+          <CardActions onClick={() => item !== undefined ? setIsModalOpen(false) : setShowCard("take_note")}>
+            <Button color="primary" variant="text" onClick={item !== undefined ? updateNotes : saveNote}>
+              close
+            </Button>
+          </CardActions>
         </div>
-      </Paper>
-    </>
+      </Card>
+      <div>
+      <Modal
+        open={isCollabModalOpen}
+        onClose={() => setIsCollabModalOpen(!isCollabModalOpen)}
+        className="modal"
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
+      >
+        <Fade in={isCollabModalOpen}>
+            
+        </Fade>
+      </Modal>
+      </div>
+    </div>
   );
-}
+};
+
 export default CreateNote;
