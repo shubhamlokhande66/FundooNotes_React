@@ -38,7 +38,7 @@ const DisplayNote = (props) => {
                     </div>
                 </div>
             ))}
-            
+              <UpdateNote item={note} open={update} close={handleClose} GetNote={props.GetNote}/>
         </div>
     );
 }
