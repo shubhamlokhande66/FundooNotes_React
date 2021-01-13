@@ -34,4 +34,18 @@ export default class noteService {
             },
           });
     }
+
+
+
+
+
+    updateNotes = (data) => {
+  console.log(process.env.REACT_APP_BASE_URL)
+    return axios.post(process.env.REACT_APP_BASE_URL+'/notes/updateNotes', data,{
+        headers: {
+          Authorization: localStorage.getItem('token'),
+        },
+      });
+}
+
 }
