@@ -1,31 +1,37 @@
 
-
 import axios from 'axios'
+const URL = process.env.REACT_APP_BASE_URL;
 
 
 
-export const saveNotes = (data , token) => {
-  console.log(data.token)
-  const URL = "http://fundoonotes.incubation.bridgelabz.com/api/notes/addNotes"
-  return axios.post(`${URL}`, data, {
-     headers: {
-       Authorization: localStorage.getItem('token'),
-     },
-   });
+export default class noteService {
+
+
+    addNote = (data) => {
+      console.log(process.env.REACT_APP_BASE_URL)
+        return axios.post(process.env.REACT_APP_BASE_URL+ '/notes/addNotes'  , data,{
+            headers: {
+              Authorization:localStorage.getItem('token'),
+            },
+          });
+    }
+
+    getNotes = () => {
+      console.log(process.env.REACT_APP_BASE_URL)
+      return axios.get(process.env.REACT_APP_BASE_URL+'/notes/getNotesList',{
+        headers: {
+          Authorization: localStorage.getItem('token'),
+        },
+      });
+    }
+
+
+    deleteNote = (data) => {
+      console.log(process.env.REACT_APP_BASE_URL)
+        return axios.post(process.env.REACT_APP_BASE_URL+'/notes/trashNotes', data,{
+            headers: {
+              Authorization: localStorage.getItem('token'),
+            },
+          });
+    }
 }
-
-
-export const getNoteList = (token) => {
-  console.log(token)
-  const URL = "http://fundoonotes.incubation.bridgelabz.com/api/notes/getNotesList"
-  return axios.get(`${URL}`, {
-   headers: {
-     Authorization: localStorage.getItem('token'),
-   },
- });
-}
-
-
-
-
-
