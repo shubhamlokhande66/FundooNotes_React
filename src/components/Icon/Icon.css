@@ -1,0 +1,23 @@
+.moreIcon{
+    cursor: pointer;
+    font-size: 1.7rem !important;
+}
+.moreOptionCardContainer{
+    padding: 1%;
+    position: absolute;
+}
+.moreOptionCardContent{
+    padding: 0% !important;
+    cursor: pointer;
+}
+.deleteOption{
+    padding: 0% !important;
+    cursor: pointer;
+    margin-top: 10% !important;
+}
+.moreOptionCardContent:hover{
+    background-color: #feefc3;
+}
+.deleteOption:hover{
+    background-color: #feefc3;
+}
