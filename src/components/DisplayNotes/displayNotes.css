@@ -1,0 +1,60 @@
+.display {
+    display: flex;
+    width: 270px;
+
+  
+    clear: both;
+    margin: 0 -5px;
+    display: inline-flex;
+    white-space: normal;
+    margin-left: 1%;
+    margin-top: 3%;
+}
+
+
+/* .display-note{
+   
+    margin-bottom: 100%;
+    width: 25%;
+  padding: 0 10px;
+  display: inline-flex;
+  width: 420px;
+  margin-left: 10%;
+  margin-right: 20%;
+} */
+
+.addNote {
+    width: 300px;
+    height: max-content;
+    margin: 5px;
+    border: 1px solid #dadce0;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+.notes1 {
+    height: max-content;
+}
+
+.pds {
+    letter-spacing: .00625em;
+    padding: 5px;
+    height: 24px;
+}
+
+.toolbar1 {
+    display: flex;
+}
+.toolbar1 > button {
+    padding: 6px;
+}
+
+@media screen and (max-width: 600px) {
+    .display {
+        width:90%;
+    }
+
+    .addNote {
+        width: 80%;
+    }
+}
