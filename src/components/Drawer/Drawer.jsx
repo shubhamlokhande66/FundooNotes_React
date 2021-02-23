@@ -1,4 +1,4 @@
-import React from "react";
+import React,{ useState, useEffect }from "react";
 import "./Drawer.css"
 import Drawer from '@material-ui/core/Drawer';
 import EmojiObjectsIcon from '@material-ui/icons/EmojiObjects';
@@ -8,6 +8,16 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import { Divider, List, ListItem, Typography, ListItemIcon, ListItemText } from '@material-ui/core/';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
+import ArchiveOutlinedIcon from '@material-ui/icons/ArchiveOutlined';
+import EmojiObjectsOutlinedIcon from '@material-ui/icons/EmojiObjectsOutlined';
+import { useHistory } from "react-router-dom";
+import { Link } from 'react-router-dom'
+import { Switch, Route } from 'react-router-dom'
+import Note from '../DisplayNotes/DisplayNotes'
+import Delete from '@material-ui/icons/Delete';
+import NoteService from '../../Service/NoteService';
+
+const service = new NoteService();
 const drawerWidth = 200;
 var checkOpen = "close";
 const useStyles = makeStyles((theme) => ({
@@ -72,8 +82,29 @@ const useStyles = makeStyles((theme) => ({
 }))
 export default function DrawerBar(props) {
   const classes = useStyles();
+  const [keyValue, setKeyValue] = useState(false);
+  const [noteList, setNoteList] = useState([]);
+  const [search, setSearch] = useState('')
+  let history = useHistory();
+  const handleClass = (value) => {
+    setKeyValue(value);
+  }
+  useEffect(() => {
+    handleClass('Notes')
+    history.push("/dashboard/notes");
+  }, [])
 
  
+
+//   const getNote = () => {
+//     service.getNotes().then((res) => {
+//             setNoteList(res.data.data.data);
+//         })
+//         .catch((err) => {
+//             console.log(err);
+//         });
+// }
+
 
   return (
     <div className={classes.root}>
@@ -87,13 +118,11 @@ export default function DrawerBar(props) {
       >
         <List>
           <div className="notes">
-            <ListItem >
-              <ListItemIcon>
-                <EmojiObjectsIcon className="Notes" >
-                </EmojiObjectsIcon>
-              </ListItemIcon>
-              <ListItemText primary='Notes' />
-            </ListItem>
+          <ListItem button component={Link} to="/dashBoard/notes" onClick={() => { handleClass('Notes') }}
+            className={keyValue === 'Notes' ? 'pink' : 'white'} key='Notes'>
+            <ListItemIcon><EmojiObjectsOutlinedIcon /></ListItemIcon>
+            <ListItemText>Notes</ListItemText>
+          </ListItem>
           </div>
           <div className="reminder">
             <ListItem  >
@@ -116,30 +145,24 @@ export default function DrawerBar(props) {
               <ListItemText primary='Edit-Label' />
             </ListItem>
           </div>
-
-          <div className="archive">
-            <ListItem >
-              <ListItemIcon>
-                <ArchiveIcon className="Archive">
-
-                </ArchiveIcon>
-              </ListItemIcon>
-
-              <ListItemText primary='Archive' />
-            </ListItem>
-          </div>
+          <ListItem button onClick={() => { handleClass('Archive') }}
+           component={Link} to="/dashboard/archives"
+            className={keyValue === 'Archive' ? 'pink' : 'white'} key='Archive'>
+            <ListItemIcon><ArchiveOutlinedIcon /></ListItemIcon>
+            <ListItemText>Archive</ListItemText>
+          </ListItem>
+         
           <div className="bin">
-            <ListItem  >
-              <ListItemIcon>
-                <DeleteIcon className="trash">
-
-                </DeleteIcon>
-              </ListItemIcon>
-              <ListItemText primary='Trash' />
-            </ListItem>
+          <ListItem button onClick={() => { handleClass('Delete') }}
+            component={Link} to="/dashboard/trashes"
+            className={keyValue === 'Delete' ? 'pink' : 'white'} key='Delete'>
+            <ListItemIcon><Delete /></ListItemIcon>
+            <ListItemText>Trash</ListItemText>
+          </ListItem>
           </div>
         </List>
       </Drawer>
+     
     </div>
 
   )

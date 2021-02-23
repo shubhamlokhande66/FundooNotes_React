@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import IconButton from "@material-ui/core/IconButton";
 import ImageOutlinedIcon from '@material-ui/icons/ImageOutlined';
 import ArchiveOutlinedIcon from '@material-ui/icons/ArchiveOutlined';
+import UnarchiveOutlinedIcon from '@material-ui/icons/UnarchiveOutlined';
 import PersonAddOutlinedIcon from '@material-ui/icons/PersonAddOutlined';
 import PaletteOutlinedIcon from '@material-ui/icons/PaletteOutlined';
 import AddAlertOutlinedIcon from '@material-ui/icons/AddAlertOutlined';
@@ -10,24 +11,31 @@ import MoreVertOutlinedIcon from '@material-ui/icons/MoreVertOutlined';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import '../MoreIcon/MoreIcon.css';
-//import MoreMenu from '../MoreIcon/MoreIcon';
 import Service from '../../Service/NoteService';
-
+import Tooltip from '@material-ui/core/Tooltip'
+import "./Icon.css"
+import Reminder from "../Reminder/Reminder";
 const services = new Service()
 const DisplayIcons = (props) => {
-    const [color, setColor] = useState(false)
-    const [showColorList, setShowColorList] = useState(false);
     const [anchorEl, setAnchorEl] = React.useState(null);
+    const [anchorE2, setAnchorE2] = useState(null);
+    const [dateTimeChip, setDateTimeChip] = useState("");
+    const [displayDateTime, setDisplayDateTime] = useState("")
     let Bgcolor = props.color
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
-
+    const handleClose1 = () => {
+        setAnchorE2(null);
+    };
     const handleClose = () => {
         setAnchorEl(null);
     };
+    const handleClick1 = (event) => {
+        setAnchorE2(event.currentTarget);
+    };
+
 
     const handleTrashNotes = () => {
         let data = {
@@ -42,6 +50,20 @@ const DisplayIcons = (props) => {
         })
     }
 
+
+    const handleArchiveNotes = (value) => {
+        if (props.id !== '') {
+            let data = {
+                noteIdList: [props.item.id], isArchived: value
+            }
+            services.archiveNotes(data).then(res => {
+                console.log(res)
+                props.GetNote();
+            }).catch(err => {
+                console.log(err);
+            })
+        }
+    }
     
 
     const DATA = [
@@ -59,38 +81,60 @@ const DisplayIcons = (props) => {
         { title: "Gray", id: "#e8eaed" },
     ];
 
-    const selectColor = (value) => {
-        props.setBgColor(value);
-        Bgcolor=value;
-    };
-
-    const handleColor = () => {
-        setColor(true)
+    const updateColor = (value) => {
+        if (props.id !== '') {
+            props.setBgColor(value);
+            let data = {
+                noteIdList: [props.id], color: value
+            }
+            services.updateColor(data).then(res => {
+                console.log(res)
+                props.GetNote();
+            }).catch(err => {
+                console.log(err);
+            })
+        }
+        else {
+            props.setBgColor(value);
+        }
     }
-
-    const handleColorOut = () => {
-        setColor(false)
-    }
+ 
+  
 
     return (
         <div className="tools">
             <IconButton aria-label="Remind me" edge="start">
-                <AddAlertOutlinedIcon fontSize="small" />
+            <Reminder setDateTimeChip={setDateTimeChip} setDisplayDateTime={setDisplayDateTime} />
             </IconButton>
             <IconButton aria-label="Collaborator">
                 <PersonAddOutlinedIcon fontSize="small" />
             </IconButton>
             <IconButton aria-label="Change color"
-                onClick={() => { handleColor(); setShowColorList(!showColorList) }}>
+                onClick={handleClick1} >
                 <ColorLensOutlinedIcon fontSize="small" />
             </IconButton>
-            
+            <Menu
+                        id="simple-menu"
+                        anchorEl={anchorE2}
+                        keepMounted
+                        open={Boolean(anchorE2)}
+                        onClose={handleClose1}>
+                        <div className="color-change">
+                            {DATA.map((item) => (
+                                <button onClick={() => { updateColor(item.id) }}
+                                    className="button-color"
+                                    style={{ backgroundColor: item.id }} />
+                            ))}
+                        </div>
+                    </Menu>
             <IconButton aria-label="Add image">
                 <ImageOutlinedIcon fontSize="small" />
             </IconButton>
-            <IconButton aria-label="Archive note"  >
-                <ArchiveOutlinedIcon fontSize="small" />
-            </IconButton>
+            <Tooltip title="Archive">
+                        <IconButton aria-label="Archive note" onClick={() => { handleArchiveNotes(!props.item.isArchived) }}>
+                            {props.archive ? <UnarchiveOutlinedIcon fontSize="small" /> : <ArchiveOutlinedIcon fontSize="small" />}
+                        </IconButton>
+                    </Tooltip>
             <IconButton aria-label="More" onClick={handleClick}>
                 <MoreVertOutlinedIcon fontSize="small" />
             </IconButton>

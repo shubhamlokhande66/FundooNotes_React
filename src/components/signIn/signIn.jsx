@@ -99,6 +99,11 @@ export default class signIn extends React.Component {
       Services
         .userlogin(loginData)
         .then((response) => {
+          console.log(response);
+        //localStorage.setItem("userToken", response.data.id);
+        localStorage.setItem("firstName", response.data.firstName);
+        localStorage.setItem("lastName", response.data.lastName);
+        localStorage.setItem("email", response.data.email);
           if (response.status === 200) {
             this.setState({
               snackbarOpen: true,
@@ -106,7 +111,7 @@ export default class signIn extends React.Component {
             });
             localStorage.setItem("token", response.data.id);
             setTimeout(() => {
-              this.props.history.push("/appbar");
+              this.props.history.push("/dashboard");
             }, 2000);
           } else {
             this.setState({

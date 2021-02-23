@@ -79,7 +79,7 @@ const NewNote = (props) => {
                     </div>
                 </div>
                 <div className="toolbar">
-                    <IconButtons setBgColor={setBgColor} />
+                    <IconButtons setBgColor={setBgColor} archive={props.archive} noTrash={noTrash} id={id}  />
                     <div className="close-button">
                         <Button size="small" onClick={() => { saveNote() }}>Close</Button>
                     </div>

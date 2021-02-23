@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import './displayNotes.css'
 import DisplayIcons from '../Icon/Icon'
-import UpdateNote from '../UpdateNote/UpdateNote';
+import UpdateNote from '../UpdateNotes/UpdateNotes';
 
 
 const DisplayNote = (props) => {
@@ -25,20 +25,20 @@ const DisplayNote = (props) => {
                 <div className="display">
                     <div className="addNote"  style={{ backgroundColor: item.color}}>
                         <div className="notes1" onClick={() => handleUpdate(item)}>
-                            <div className="title pds">
+                            <div className="pds">
                                 {item.title}
                             </div>
-                            <div className='note pds'>
+                            <div className="pds">
                                 {item.description}
                             </div>
                         </div>
                         <div className="toolbar1">
-                            <DisplayIcons setBgColor={setBgColor} item={item} id={item.id} GetNote={props.GetNote} />
+                            <DisplayIcons setBgColor={setBgColor} item={item} id={item.id} GetNote={props.GetNote} archive={props.archive} trash={props.trash}/>
                         </div>
                     </div>
                 </div>
             ))}
-              <UpdateNote item={note} open={update} close={handleClose} GetNote={props.GetNote}/>
+              <UpdateNote item={note} open={update} close={handleClose} GetNote={props.GetNote} trash={props.trash}/>
         </div>
     );
 }

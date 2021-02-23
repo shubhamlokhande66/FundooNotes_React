@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./Appbar.css";
+// import Profile from "../Profile/Profile";
 import clsx from "clsx";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -15,7 +16,21 @@ import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircle';
 import AppsRoundedIcon from "@material-ui/icons/AppsRounded";
 import Sidebar from "../Drawer/Drawer";
 import { makeStyles } from "@material-ui/core/styles";
+import { useHistory } from "react-router-dom";
+import Menu from "@material-ui/core/Menu";
+import Paper from "@material-ui/core/Paper";
+import MenuItem from "@material-ui/core/MenuItem";
+import ListIcon from '@material-ui/icons/List';
+import AppIcon from '@material-ui/icons/Apps';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import { Avatar, Button } from "@material-ui/core";
+
+import Service from "../../Service/NoteService";
 var checkOpen = "close";
+
+
+
+const services = new Service()
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -26,6 +41,14 @@ const useStyles = makeStyles((theme) => ({
   },
   hide: {
     display: "none",
+  },
+  iconLogo: {
+    width: "1.1em",
+    height: "1.1em",
+    [theme.breakpoints.down("xs")]: {
+      width: "0.9em",
+      height: "0.9em",
+    },
   },
   drawer: {
     whiteSpace: "nowrap",
@@ -44,12 +67,38 @@ const useStyles = makeStyles((theme) => ({
       width: theme.spacing(9) + 1,
     },
   },
+  settingMenu: {
+    marginTop: theme.spacing(6),
+    marginLeft: "1em"
+  },
+  innericon: {
+    marginLeft: "7em",
+},
+row: {
+  marginTop: "10px",
+  marginLeft: "-4em",
+
+},
 }));
 
-export default function ToolBar() {
 
- const [open, setOpen ,close] = React.useState(false);
- const classes = useStyles();
+export default function ToolBar(props) {
+
+  const [open, setOpen, close] = React.useState(false);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorE2, setAnchorE2] = React.useState(null);
+  const [view, setView] = useState(false);
+  const [imageRefresh, setImageRefresh] = useState(Math.random())
+  const classes = useStyles();
+  let history = useHistory();
+  const [showProfile, setShowProfile] = useState(false)
+  const [displayImage, setDisplayImage] = useState('')
+  const [hide, setHide] = useState(false)
+  const [file, setFile] = React.useState("");
+  let userEmail = localStorage.getItem("email")
+  let userFirstName = localStorage.getItem("firstName")
+  let userLastName = localStorage.getItem("lastName")
+
   const drawerOpenClose = () => {
     if (checkOpen == "open") {
       setOpen(false);
@@ -61,13 +110,54 @@ export default function ToolBar() {
     console.log(checkOpen);
   };
 
-  const drawerOpen = () => {
-    setOpen(true);
+
+  const profileHandleOpen = (event) => {
+    setAnchorE2(event.currentTarget);
+  };
+  const profileHandleClose = () => {
+    setAnchorE2(null);
+  };
+  const handleLogout = () => {
+    localStorage.clear();
+    history.push("/");
+  };
+  const handleViewOpen = () => {
+    setView(!view);
+  }
+  const handleHideAccount = () => {
+    setHide(!hide)
   }
 
-  const drawerClose = () => {
-    setOpen(false);
-  }
+
+
+
+  const handleProfile = async (event) => {
+
+    event.preventDefault();
+    setFile(event.target.files[0]);
+    const formData = new FormData();
+    await formData.append("file", file);
+    services.uploadImage(formData)
+        .then((response) => {
+            console.log("Image: " + JSON.stringify(response));
+            console.log("imageURL", response.data.status.imageUrl)
+
+            localStorage.setItem("profileImage", response.data.status.imageUrl)
+
+             //const link = "http://fundoonotes.incubation.bridgelabz.com/"+localStorage.getItem('profileImage');
+
+            // localStorage.setItem('link',link)
+
+        })
+        .catch((err) => {
+            console.log("Error = " + err);
+        });
+
+};
+const link = "http://fundoonotes.incubation.bridgelabz.com/";
+
+
+
 
   return (
     <div className="main">
@@ -76,8 +166,8 @@ export default function ToolBar() {
         <Toolbar className="topBar">
           <div className="startOptions">
             <div className="menuButton">
-              <IconButton  onClick={drawerOpenClose} edge="start" aria-label="open drawer">
-              <MenuIcon />
+              <IconButton onClick={drawerOpenClose} edge="start" aria-label="open drawer">
+                <MenuIcon />
               </IconButton>
             </div>
             <div className="headerIcon">
@@ -103,41 +193,57 @@ export default function ToolBar() {
             />
           </div>
           <div className="buttonContainer">
-            <div className="button">
-              <IconButton aria-label="open drawer">
-                <ReplayOutlinedIcon />
-              </IconButton>
-            </div>
-
-            <div className="button">
-              <IconButton aria-label="open drawer">
-                <DnsRoundedIcon />
-              </IconButton>
-            </div>
-
-            <div className="button">
-              <IconButton aria-label="open drawer">
-                <SettingsSharpIcon />
-              </IconButton>
-            </div>
           </div>
           <div class="appsContainer">
-            <div className="button">
-              <IconButton aria-label="open drawer">
-                <AppsRoundedIcon />
+            <div className="Grid">
+              <div className="button">
+                <IconButton className='App-icon' onClick={handleViewOpen} >
+                  {view ? <AppIcon /> : <ListIcon />}
+                  {/* <AppsRoundedIcon /> */}
+                </IconButton>
+              </div>
+            </div>
+
+            <div className="row-head3">
+  
+              <IconButton onClick={handleHideAccount} onClickAway={()=>setShowProfile(false)} alt={localStorage.getItem("firstName")}
+              >
+                <AccountCircleIcon fontSize='large' />
               </IconButton>
             </div>
-            <div className="button">
-              <IconButton aria-label="open drawer">
-                <AccountCircleOutlinedIcon />
-              </IconButton>
+            <div className={hide ? "true profile" : "false profile"} >
+              <div className="person">
+                <div className="avatarContainer">
+                <div className={classes.innericon}>
+                  <Avatar alt={localStorage.getItem("firstName")}
+                    src={link}
+                    
+                 />
+                 <div className={classes.row}>
+                <input type="file" name="file" onChange={handleProfile} />
+                  </div>
+                 </div>
+                </div>
+                <div className='name' style={{ fontSize: 20 }}>
+                  {userFirstName} {userLastName}
+                </div>
+                <div className='name' style={{ fontSize: 15 }}>
+                  {userEmail}
+                </div>
+              </div>
+              <div className="cardActions">
+                <Button variant="contained" onClick={() => {
+                  handleLogout()
+                }}>Logout</Button>
+              </div>
             </div>
           </div>
+
         </Toolbar>
       </AppBar>
-      
-      <Sidebar drawerOpenClose={open}   /> 
-    
+
+      <Sidebar drawerOpenClose={open} />
+
     </div>
   );
 }

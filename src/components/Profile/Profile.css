@@ -1,0 +1,42 @@
+.profileContainer{
+    display: flex;
+    position: absolute;
+    right: 0;
+    margin-right: 1%;
+}
+.profielCardContainer{
+    display: flex; 
+    flex-Direction: 'coloum';
+    align-items: center;
+}
+.cardActions{
+    display: flex;
+    justify-content: flex-end;
+}
+.profileIcon{
+    background-color: #f5a453 !important;
+    border: 1px solid #facd9f;
+}
+.profileIconContainer{
+    align-items: center;
+}
+.profileButton{
+    display: flex;
+    align-items: center;
+}
+.avatarIcon{
+    background-color: #f5a453 !important;
+}
+.avatarContainer{
+    margin-right: 1%;
+}
+
+@media (max-Width: 360px){
+    .profileButton{
+        padding: 0px !important;
+    }
+    .profileIconContainer{
+        display: flex;
+        align-items: center;
+    }
+}

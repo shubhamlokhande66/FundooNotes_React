@@ -3,8 +3,8 @@ import Dialog from '@material-ui/core/Dialog';
 import InputBase from '@material-ui/core/InputBase';
 import Button from '@material-ui/core/Button';
 import DisplayIcons from '../Icon/Icon';
-import Service from '../../Sevices/NoteService'
-import './UpdateNote.css'
+import Service from '../../Service/NoteService'
+import './UpdateNotes.css'
 
 const services = new Service()
 
@@ -26,7 +26,7 @@ const UpdateNote = (props) => {
         formData.set("noteId", id)
         formData.set("title", title);
         formData.set("description", description);
-        services.updateNotes(formData, localStorage.getItem("userToken")).then(res => {
+        services.updateNotes(formData).then(res => {
             console.log(res)
             props.GetNote()
             props.close()

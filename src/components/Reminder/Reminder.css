@@ -1,0 +1,53 @@
+.reminderContainer{
+    cursor: pointer;
+    font-size: -1rem !important;
+    padding: 5px 7px 3px;
+}
+.dateTimeContainer{
+    position: absolute;
+    width: 240px;
+}
+.dateTimeCardContainer{
+    padding: 7%;
+    font-size: 15px;
+    
+}
+.dateTimeCardContentReminder{
+    padding: 0% !important;
+    margin-bottom: 5%;
+
+
+}
+.dateTimeCardContentStyle{
+    padding: 2% !important;
+    margin-bottom: 5%;
+    margin-left: 5%;
+    cursor: pointer;
+}
+.dateTimeSubCardcontentStyle{
+    margin-bottom: 15%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 70%;
+}
+.pickDateTimeLabel{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.dateTimePickerContainer{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    cursor: pointer;
+}
+.saveButton{
+   margin-left: 4%;
+}
+.tools {
+    flex-grow: 1;
+    display: flex;
+    width: 1em;
+    /* justify-content: space-between; */
+}

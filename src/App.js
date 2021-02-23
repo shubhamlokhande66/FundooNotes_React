@@ -9,6 +9,9 @@ import ForgetPassword from "../src/Pages/ForgetPassword";
 import Resetpassword from "../src/Pages/resetPasword/Resetpassword"
 import Dashboard from "./Pages/DashBoard/Dashboard";
 import Appbar from "./components/AppBar/Appbar"
+import Drawer from "./components/Drawer/Drawer"
+import Create from "./components/CreateNotes/CreateNotes"
+
 function App() {
   return (
     <Routing>
@@ -18,9 +21,11 @@ function App() {
           <Route path="/registration" component={registration}></Route>
           <Route path="/login"  component={login}></Route>
           <Route path="/forgotPassword" component={ForgetPassword}></Route>
-          <Route path="/resetpassword" component={Resetpassword}></Route>
+          <Route path="/resetpassword/:token" component={Resetpassword}></Route>
           <Route path="/dashboard" component={Dashboard} ></Route>
           <Route path="/appbar" component={Appbar} ></Route>
+          <Route path="/drawer" component={Drawer} ></Route>
+          <Route path="/create" component={Create} ></Route>
         </Switch>
      </div>
     </Routing>

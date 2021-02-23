@@ -16,4 +16,8 @@
     margin-top: 5px;
     border: none;
   }
- 
+  .main1{
+    width:100%;
+    min-width: 320px; 
+    margin-left: 100em;
+  }

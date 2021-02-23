@@ -16,7 +16,7 @@
     font-family: 'Roboto',arial,sans-serif;
     font-size: 15px;
     margin: 32px auto 16px auto;
-    margin-top: 5em;
+    margin-top: 8em;
 }
 
 .container {
@@ -25,11 +25,12 @@
     align-items: center; 
     height: 46px;
     padding: 12px 16px 12px 16px;
-    margin-top: 5em;
+    margin-top: 8em;
 }
 
 .note {
     flex-grow: 1;
+    text-align: start;
 }
 
 .container1 {
@@ -74,11 +75,21 @@
     .contain {
         width: 99%;
         margin: 16px 30px 8px 30px;
-        margin-top: 3em;
+        margin-top: 6em;
+        flex-direction: row;
     }
 
     .note { 
-        width: 200px;
+        width: 50px;
+    }
+    .toolbar{
+         margin-top: 6em;
+    
+         margin-left: -10em;
+
+
+        }
+     
+
         
     }
-}

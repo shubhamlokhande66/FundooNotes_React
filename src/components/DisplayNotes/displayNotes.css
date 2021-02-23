@@ -1,35 +1,25 @@
 .display {
     display: flex;
-    width: 270px;
-
-  
+    width: 270px;  
     clear: both;
     margin: 0 -5px;
     display: inline-flex;
     white-space: normal;
     margin-left: 1%;
     margin-top: 3%;
+  
 }
 
 
-/* .display-note{
-   
-    margin-bottom: 100%;
-    width: 25%;
-  padding: 0 10px;
-  display: inline-flex;
-  width: 420px;
-  margin-left: 10%;
-  margin-right: 20%;
-} */
 
 .addNote {
-    width: 300px;
+    width: 220px;
     height: max-content;
     margin: 5px;
     border: 1px solid #dadce0;
     border-radius: 8px;
     box-sizing: border-box;
+    height: 7em;
 }
 
 .notes1 {
@@ -38,23 +28,38 @@
 
 .pds {
     letter-spacing: .00625em;
-    padding: 5px;
-    height: 24px;
+    padding: 6px;
+    overflow-wrap: break-word;
+    text-align: start;
+    
+}
+
+.tool {
+    height: 40px;
 }
 
 .toolbar1 {
-    display: flex;
+    display: none;
+    height: 100px;
+
 }
-.toolbar1 > button {
-    padding: 6px;
+
+.addNote:hover .toolbar1{
+    display: block;
+    padding-left: 5px;
+
 }
 
 @media screen and (max-width: 600px) {
     .display {
-        width:90%;
+        width:70%;
+       
     }
 
     .addNote {
-        width: 80%;
+        width: 90%;
     }
 }
+
+
+
