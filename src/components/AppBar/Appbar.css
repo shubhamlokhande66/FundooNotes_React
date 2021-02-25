@@ -1,186 +1,180 @@
-.topBar{
-    display: flex;
-    justify-content: space-between;
-    height: 2em;
+.topBar {
+  display: flex;
+  justify-content: space-between;
+  height: 2em;
 }
-.headerIcon{
-   width: 40px;
-   margin-left: 1em;
+.headerIcon {
+  width: 40px;
+  margin-left: 1em;
 }
-.startOptions{
-    display: flex;
-    align-items: center;
+.startOptions {
+  display: flex;
+  align-items: center;
 }
-.buttonContainer{
-    display: flex;
+.buttonContainer {
+  display: flex;
 }
-.headerTitle{
-    margin: 1%;
-    color: #5f6368;
-    font-size: 22px;
-    font-family: 'Product Sans',Arial,sans-serif;
-    display: inline-block;
-    margin-left: 1em;
+.headerTitle {
+  margin: 1%;
+  color: #5f6368;
+  font-size: 22px;
+  font-family: "Product Sans", Arial, sans-serif;
+  display: inline-block;
+  margin-left: 1em;
 }
-.search{
-    height: 9vh;
-    /* margin-left: 6%; */
-    width: 50%;
-    display: flex;
-    align-items: center;
-    background-color: rgb(238, 238, 238);
-    border-radius: 8px;
-    height: 3em;
+.search {
+  height: 9vh;
+  /* margin-left: 6%; */
+  width: 50%;
+  display: flex;
+  align-items: center;
+  background-color: rgb(238, 238, 238);
+  border-radius: 8px;
+  height: 3em;
 }
-.searchIcon{
-   margin-left: 3%;
+.searchIcon {
+  margin-left: 3%;
 }
-.searchInput{
-    margin-left:2% ;
-    width: 80%;
+.searchInput {
+  margin-left: 2%;
+  width: 80%;
 }
-.appsContainer{
-    display: flex;
+.appsContainer {
+  display: flex;
 }
 
-
-.button{
-    margin-left: 5em;
-
-}.row-head3 {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    box-sizing: border-box;
-    height: 48px;
-   
-    
+.button {
+  margin-left: 5em;
 }
-.person{
-    display: flex; 
-    flex-Direction: column;
-    align-items: center;
-    margin: 20px 33px;
-    height: 150px;
+.row-head3 {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  box-sizing: border-box;
+  height: 48px;
 }
-.avatarContainer{
-    position: relative;
-    height: 86px;
-    width: 86px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-right: 1%;
+.person {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px 33px;
+  height: 150px;
+}
+.avatarContainer {
+  position: relative;
+  height: 86px;
+  width: 86px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 1%;
 }
 .name {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    margin-top: 1em;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 1em;
 }
 
-.cardActions{
-    display: flex;
-    justify-content: center;
+.cardActions {
+  display: flex;
+  justify-content: center;
 }
 
-.avatarIcon{
-    background-color: #f5a453 !important;
+.avatarIcon {
+  background-color: #f5a453 !important;
 }
 .MuiListItem-button {
-    border-radius: 0 25px 25px 0 !important;
+  border-radius: 0 25px 25px 0 !important;
 }
 
 .pink {
-    background-color: #feefc3 !important;
+  background-color: #feefc3 !important;
 }
 
 .profile {
-    display: flex;
-    flex-direction: column;
-    width: 250px;
-    height: 280px;
-    position: absolute;
-    right: 8px;
-    top: 62px;
-    border: 1px solid;
-    border-color: rgba(0,0,0,.2);
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0,0,0,.2);
-    background-color: #fff; 
-    z-index: 4011;
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+  height: 280px;
+  position: absolute;
+  right: 8px;
+  top: 62px;
+  border: 1px solid;
+  border-color: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  background-color: #fff;
+  z-index: 4011;
 }
 
 .false {
-    display: none;
+  display: none;
 }
 .MuiAvatar-root {
-    width: 60px !important;
-    height: 60px !important;
+  width: 60px !important;
+  height: 60px !important;
 }
-.logbutton{
-    align-content: center;
+.logbutton {
+  align-content: center;
 }
-.row-icons{
-    display: flex;
+.row-icons {
+  display: flex;
 }
 .row-head3 {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    box-sizing: border-box;
-    height: 48px;
-    padding-right:  4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  box-sizing: border-box;
+  height: 48px;
+  padding-right: 4px;
 }
-.person{
-    display: flex; 
-    flex-Direction: column;
-    align-items: center;
-    margin: 20px 33px;
-    height: 150px;
+.person {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px 33px;
+  height: 150px;
 }
 .MuiAvatar-root {
-    width: 60px !important;
-    height: 60px !important;
+  width: 60px !important;
+  height: 60px !important;
 }
 
 .name {
-    width: 100%;
-    display: flex;
-    justify-content: center;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
-.cardActions{
-    display: flex;
-    justify-content: center;
+.cardActions {
+  display: flex;
+  justify-content: center;
 }
 
-.avatarIcon{
-    background-color: #f5a453 !important;
+.avatarIcon {
+  background-color: #f5a453 !important;
 }
 
-.avatarContainer{
-    position: relative;
-    height: 86px;
-    width: 86px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-right: 1%;
+.avatarContainer {
+  position: relative;
+  height: 86px;
+  width: 86px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 1%;
 }
 
 @media screen and (max-width: 600px) {
-.search{
-   height: 50px;
-   margin-left: 1em;
-   
-}
-.row-head3{ 
+  .search {
+    height: 50px;
+    margin-left: 1em;
+  }
+  .row-head3 {
     margin-left: -7em;
-
-}
-.headerIcon{
+  }
+  .headerIcon {
     margin-left: -0.5px;
- }
-
+  }
 }
