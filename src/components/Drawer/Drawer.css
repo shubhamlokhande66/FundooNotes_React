@@ -1,23 +1,21 @@
-
-.drawerBox{
-    margin-top: 100em;
-    width: 100%;
-    margin-left: 200em;
+.drawerBox {
+  margin-top: 100em;
+  width: 100%;
+  margin-left: 200em;
 }
-.form{
-    margin-top: 5em;
+.form {
+  margin-top: 5em;
 }
 .drawerList {
-    margin-top: 30px;
-    border: none;
-  }
-  .drawerButton
-  {
-    margin-top: 5px;
-    border: none;
-  }
-  .main1{
-    width:100%;
-    min-width: 320px; 
-    margin-left: 100em;
-  }
+  margin-top: 30px;
+  border: none;
+}
+.drawerButton {
+  margin-top: 5px;
+  border: none;
+}
+.main1 {
+  width: 100%;
+  min-width: 320px;
+  margin-left: 100em;
+}
