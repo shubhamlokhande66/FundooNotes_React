@@ -12,20 +12,19 @@ import {
 } from "@material-ui/core";
 import userServices from "../../Service/UserService";
 import Typography from "@material-ui/core/Typography";
-import AccImg from "../assets/account.svg";
+import AccImg from "../../assets/account.svg";
 
 const regexValidateEmail = new RegExp(
-    /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$$/
-  );
-  const regexvalidatePassword = new RegExp(
-    /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/
-  );
-  const regexvalidaterePassword = new RegExp(
-    /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/
-  );
-  const regexvalidateName = new RegExp(/^[A-Z]{1}[a-z]{3,}$/);
-  const regexvalidateLastName = new RegExp(/^[A-Z]{1}[a-z]{3,}$/);
-
+  /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$$/
+);
+const regexvalidatePassword = new RegExp(
+  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/
+);
+const regexvalidaterePassword = new RegExp(
+  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/
+);
+const regexvalidateName = new RegExp(/^[A-Z]{1}[a-z]{3,}$/);
+const regexvalidateLastName = new RegExp(/^[A-Z]{1}[a-z]{3,}$/);
 
 class Registration extends Component {
   constructor(props) {
@@ -55,7 +54,6 @@ class Registration extends Component {
         password: "",
       },
     };
-    
   }
 
   onSubmit = () => {
@@ -72,13 +70,12 @@ class Registration extends Component {
       });
     } else {
       let data = {
-        "firstName": this.state.firstName,
-        "lastName": this.state.lastName,
-        "email": this.state.email,
-        "password": this.state.password,
-        "rePassword":this.state.rePassword,
-        "service": "advance",
-        
+        firstName: this.state.firstName,
+        lastName: this.state.lastName,
+        email: this.state.email,
+        password: this.state.password,
+        rePassword: this.state.rePassword,
+        service: "advance",
       };
 
       userServices
@@ -108,109 +105,109 @@ class Registration extends Component {
   };
   validate = (data) => {
     const errors = {};
-    if (!regexValidateEmail.test(data.email))
-      errors.email = "Invalid email";
+    if (!regexValidateEmail.test(data.email)) errors.email = "Invalid email";
     return errors;
   };
 
   onchangeFirstName = (event) => {
-      this.setState({
-        firstName: event.target.value,
-      });
-      let errors = this.state.errors;
-      let validate = false;
+    this.setState({
+      firstName: event.target.value,
+    });
+    let errors = this.state.errors;
+    let validate = false;
     if (!regexvalidateName.test(this.state.firstName)) {
-        errors.firstName = "eg:Shubham";
-        validate = true;
+      errors.firstName = "eg:Shubham";
+      validate = true;
     } else {
-        errors.firstName = "";
-     } this.setState({
-        snackbarOpen: true,
-        snackbarMessage: "First Latters & reamining Small ",
-        errorValid: { firstName: validate },
+      errors.firstName = "";
+    }
+    this.setState({
+      snackbarOpen: true,
+      snackbarMessage: "First Latters & reamining Small ",
+      errorValid: { firstName: validate },
       errors: { firstName: errors.firstName },
-      });
-    
+    });
   };
 
   onchangeLastName = (event) => {
-   this.setState({
-        lastName: event.target.value,
-      });
-      let errors = this.state.errors;
-      let validate = false;
+    this.setState({
+      lastName: event.target.value,
+    });
+    let errors = this.state.errors;
+    let validate = false;
     if (!regexvalidateLastName.test(this.state.lastName)) {
-        errors.lastName = "eg:Lokhande";
-        validate = true;
+      errors.lastName = "eg:Lokhande";
+      validate = true;
     } else {
-        errors.lastName = "";
-    }this.setState({
-        snackbarOpen: true,
-        snackbarMessage: "First Latters & reamining Small  ",
-        errorValid: { lastName: validate },
-        errors: { lastName: errors.lastName },
-      });
-    
+      errors.lastName = "";
+    }
+    this.setState({
+      snackbarOpen: true,
+      snackbarMessage: "First Latters & reamining Small  ",
+      errorValid: { lastName: validate },
+      errors: { lastName: errors.lastName },
+    });
   };
   onchangeEmail = (event) => {
-   this.setState({
-        email: event.target.value,
-      });
-      let errors = this.state.errors;
-      let validate = false;
+    this.setState({
+      email: event.target.value,
+    });
+    let errors = this.state.errors;
+    let validate = false;
     if (!regexValidateEmail.test(this.state.email)) {
-        errors.email = "eg:shubhamlokhande@gmail.com";
-        validate = true;
+      errors.email = "eg:shubhamlokhande@gmail.com";
+      validate = true;
     } else {
-        errors.email = "";
-    }  this.setState({
-        snackbarOpen: true,
-        snackbarMessage: "All latters Should be Small",
-        errorValid: { email: validate },
-        errors: { email: errors.email },
-      });
-    
+      errors.email = "";
+    }
+    this.setState({
+      snackbarOpen: true,
+      snackbarMessage: "All latters Should be Small",
+      errorValid: { email: validate },
+      errors: { email: errors.email },
+    });
   };
- 
 
   onchangePassword = (event) => {
-   this.setState({
-        password: event.target.value,
-      });
-      let errors = this.state.errors;
-      let validate = false;
+    this.setState({
+      password: event.target.value,
+    });
+    let errors = this.state.errors;
+    let validate = false;
     if (!regexvalidatePassword.test(this.state.password)) {
-        errors.password = "eg:Shubham@123";
-        validate = true;
+      errors.password = "eg:Shubham@123";
+      validate = true;
     } else {
-        errors.password = "";
-    }this.setState({
-        snackbarOpen: true,
-        snackbarMessage: "First latters Caps and Password should be MIN 8 & MAX 20 Latters",
-        errorValid: { password: validate },
-        errors: { password: errors.password },
-      });
-    
+      errors.password = "";
+    }
+    this.setState({
+      snackbarOpen: true,
+      snackbarMessage:
+        "First latters Caps and Password should be MIN 8 & MAX 20 Latters",
+      errorValid: { password: validate },
+      errors: { password: errors.password },
+    });
   };
 
   onchangeRePassword = (event) => {
     this.setState({
-        rePassword: event.target.value,
-      });
-      let errors = this.state.errors;
-      let validate = false;
+      rePassword: event.target.value,
+    });
+    let errors = this.state.errors;
+    let validate = false;
     if (!regexvalidaterePassword.test(this.state.rePassword)) {
-        errors.rePassword = "eg:Shubham@123";
-        validate = true;
+      errors.rePassword = "eg:Shubham@123";
+      validate = true;
     } else {
-        errors.rePassword = "";
-    }this.setState({
-        snackbarOpen: true,
-        snackbarMessage: "First latters Caps and Password should be MIN 8 & MAX 20 Latters",
-        errorValid: { rePassword: validate },
-        errors: { rePassword: errors.rePassword },
-      });
-    
+      errors.rePassword = "";
+    }
+    this.setState({
+      snackbarOpen: true,
+      snackbarMessage:
+        "First latters Caps and Password should be MIN 8 & MAX 20 Latters",
+      errorValid: { rePassword: validate },
+      errors: { rePassword: errors.rePassword },
+    });
   };
 
   checkPassword() {
@@ -236,22 +233,25 @@ class Registration extends Component {
   };
   render() {
     return (
-        <div className="registration">
+      <div className="registration">
         <div elevation={0} className="signupPage">
           <div className="header">
             <span className="inlineTitle">
-            <Typography className="app_name" variant="h5" color="textSecondary">
-              <span style={{ color: "#0606f8" }}>F</span>
-              <span style={{ color: "#d10303" }}>u</span>
-              <span style={{ color: "#f0b000" }}>n</span>
-              <span style={{ color: "#0606f8" }}>d</span>
-              <span style={{ color: "green" }}>o</span>
-              <span style={{ color: "#d10303" }}>o</span>
-            </Typography>
+              <Typography
+                className="app_name"
+                variant="h5"
+                color="textSecondary"
+              >
+                <span style={{ color: "#0606f8" }}>F</span>
+                <span style={{ color: "#d10303" }}>u</span>
+                <span style={{ color: "#f0b000" }}>n</span>
+                <span style={{ color: "#0606f8" }}>d</span>
+                <span style={{ color: "green" }}>o</span>
+                <span style={{ color: "#d10303" }}>o</span>
+              </Typography>
             </span>
             <div className="headerText">Create your Fundoo Account </div>
-            
-            </div>
+          </div>
           <div className="container">
             <form className="form">
               <div className="inputs">
@@ -267,8 +267,8 @@ class Registration extends Component {
                 ></Snackbar>
                 <div className="inputField">
                   <TextField
-                  autoCapitalize="off"
-                  name="firstName"
+                    autoCapitalize="off"
+                    name="firstName"
                     label="First Name"
                     variant="outlined"
                     value={this.state.firstName}
@@ -279,10 +279,10 @@ class Registration extends Component {
                     type="text"
                     fullWidth
                   />
-                   </div>
+                </div>
                 <div className="inputField">
                   <TextField
-                   fullWidth
+                    fullWidth
                     name="lastName"
                     label="Last Name"
                     variant="outlined"
@@ -294,12 +294,11 @@ class Registration extends Component {
                     type="text"
                   />
                 </div>
-                </div>
+              </div>
               <div className="inputs">
                 <div className="inputField">
                   <TextField
                     fullWidth
-                 
                     value={this.state.email}
                     onChange={this.onchangeEmail}
                     id="input-with-icon-textfield"
@@ -309,10 +308,9 @@ class Registration extends Component {
                     placeholder="email"
                     helperText={this.state.errors["email"]}
                     type="text"
-                    
                   />
                 </div>
-                </div>
+              </div>
               <div className="inputs">
                 <div className="inputField">
                   <TextField
@@ -329,10 +327,9 @@ class Registration extends Component {
                     type="text"
                     type={this.state.showPassword ? "text" : "password"}
                   />
-                   </div>
+                </div>
                 <div className="inputField">
                   <TextField
-                   
                     id="password"
                     variant="outlined"
                     type="rePassword"
@@ -347,7 +344,7 @@ class Registration extends Component {
                     type={this.state.showPassword ? "text" : "password"}
                   />
                 </div>
-                </div>
+              </div>
               <span className="checkBoxInputs">
                 <Checkbox
                   onClick={this.clickShowPass}
@@ -358,9 +355,7 @@ class Registration extends Component {
               </span>
               <div className="footerButtons">
                 <div className="signInLink">
-                  <Button
-                    color="primary"
-                    onClick ={(e)=> this.login(e)}>
+                  <Button color="primary" onClick={(e) => this.login(e)}>
                     Sign In insted
                   </Button>
                 </div>
@@ -385,7 +380,6 @@ class Registration extends Component {
             </div>
           </div>
         </div>
-       
       </div>
     );
   }

@@ -1,4 +1,3 @@
-
 import React from "react";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
@@ -21,11 +20,10 @@ export default class forgotPassword extends React.Component {
       conformPasswordFlag: false,
       setOpen: false,
       open: false,
-     
     };
   }
   token = this.props.match.params.token;
-  
+
   change = (e) => {
     this.setState({
       [e.target.name]: e.target.value,
@@ -75,18 +73,28 @@ export default class forgotPassword extends React.Component {
       });
       let resetPasswordData = {
         newPassword: this.state.password,
-      
       };
       userServices
-        .resetPassword(resetPasswordData, this.token).then((result) => {
+        .resetPassword(resetPasswordData, this.token)
+        .then((result) => {
           let obj = JSON.stringify(result);
           console.log("Password reset successful" + obj);
-          this.setState({snackType: "success", snackMessage: "Password reset successful", open: true, setOpen: true})
+          this.setState({
+            snackType: "success",
+            snackMessage: "Password reset successful",
+            open: true,
+            setOpen: true,
+          });
           this.nextPath("../login");
         })
         .catch((error) => {
           console.log("Password reset Failed" + error);
-          this.setState({snackType: "error", snackMessage: "Password reset Failed", open: true, setOpen: true})
+          this.setState({
+            snackType: "error",
+            snackMessage: "Password reset Failed",
+            open: true,
+            setOpen: true,
+          });
         });
     } else {
       console.log("Reset Failed");
@@ -151,8 +159,7 @@ export default class forgotPassword extends React.Component {
             </span>
           </form>
         </div>
-        <div>
-      </div>
+        <div></div>
       </div>
     );
   }

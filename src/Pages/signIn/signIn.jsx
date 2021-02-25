@@ -7,26 +7,24 @@ import Snackbar from "@material-ui/core/Snackbar";
 import "./signIn.css";
 
 export default class signIn extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
-    email: "",
-    password: "",
-    emailError: "",
-    emailFlag: false,
-    passwordError: "",
-    passwordFlag: false,
-    showPassword: false,
-    snackbarOpen: false,
+      email: "",
+      password: "",
+      emailError: "",
+      emailFlag: false,
+      passwordError: "",
+      passwordFlag: false,
+      showPassword: false,
+      snackbarOpen: false,
       snackbarMessage: "",
-  };
+    };
   }
 
   nextPath(path) {
     this.props.history.push(path);
   }
-
-  
 
   clickShowPass = () => {
     this.setState({
@@ -55,7 +53,11 @@ export default class signIn extends React.Component {
       isError = true;
       errors.emailError = "Enter your Email ";
     }
-    if (!/[a-zA-Z0-9._]+[@]{1}[a-zA-Z120-9]*[.]{1}[a-zA-Z]*$/.test(this.state.email)) {
+    if (
+      !/[a-zA-Z0-9._]+[@]{1}[a-zA-Z120-9]*[.]{1}[a-zA-Z]*$/.test(
+        this.state.email
+      )
+    ) {
       errors.emailFlag = true;
       isError = true;
       errors.emailError = "Please Enter Correct Email";
@@ -96,14 +98,13 @@ export default class signIn extends React.Component {
         email: this.state.email,
         password: this.state.password,
       };
-      Services
-        .userlogin(loginData)
+      Services.userlogin(loginData)
         .then((response) => {
           console.log(response);
-        //localStorage.setItem("userToken", response.data.id);
-        localStorage.setItem("firstName", response.data.firstName);
-        localStorage.setItem("lastName", response.data.lastName);
-        localStorage.setItem("email", response.data.email);
+          //localStorage.setItem("userToken", response.data.id);
+          localStorage.setItem("firstName", response.data.firstName);
+          localStorage.setItem("lastName", response.data.lastName);
+          localStorage.setItem("email", response.data.email);
           if (response.status === 200) {
             this.setState({
               snackbarOpen: true,
@@ -141,16 +142,16 @@ export default class signIn extends React.Component {
           <span className="signIn">Sign in</span>
           Use your Fundoo Account
           <form className="loginForm">
-          <Snackbar
-                  anchorOrigin={{
-                    vertical: "bottom",
-                    horizontal: "center",
-                  }}
-                  open={this.state.snackbarOpen}
-                  autoHideDuration={3000}
-                  onClose={() => this.setState({ snackbarOpen: false })}
-                  message={this.state.snackbarMessage}
-                ></Snackbar>
+            <Snackbar
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "center",
+              }}
+              open={this.state.snackbarOpen}
+              autoHideDuration={3000}
+              onClose={() => this.setState({ snackbarOpen: false })}
+              message={this.state.snackbarMessage}
+            ></Snackbar>
             <div className="inputfield">
               <TextField
                 className="input"
@@ -175,22 +176,29 @@ export default class signIn extends React.Component {
                 error={this.state.passwordFlag}
                 helperText={this.state.passwordError}
               />
-               
             </div>
             <span className="checkBox">
-                <Checkbox
-                  onClick={this.clickShowPass}
-                  color="primary"
-                  className="showPass"
-                />
-                Show Password
-              </span>
+              <Checkbox
+                onClick={this.clickShowPass}
+                color="primary"
+                className="showPass"
+              />
+              Show Password
+            </span>
             <div className="forgetPassword">
-              <Button color="primary" onClick={() => this.nextPath('../forgotPassword')}>Forgot password?</Button>
+              <Button
+                color="primary"
+                onClick={() => this.nextPath("../forgotPassword")}
+              >
+                Forgot password?
+              </Button>
             </div>
             <span className="footer">
               <div className="button">
-                <Button color="primary" onClick={() => this.nextPath('../registration')}>
+                <Button
+                  color="primary"
+                  onClick={() => this.nextPath("../registration")}
+                >
                   Create account
                 </Button>
               </div>
@@ -198,7 +206,8 @@ export default class signIn extends React.Component {
                 <Button
                   variant="contained"
                   color="primary"
-                  onClick={(e) => this.onSubmit(e)}>
+                  onClick={(e) => this.onSubmit(e)}
+                >
                   Sign In
                 </Button>
               </div>
