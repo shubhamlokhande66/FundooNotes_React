@@ -94,8 +94,6 @@ export default class noteService {
   };
 
   uploadImage = (data) => {
-    //const URL = "http://fundoonotes.incubation.bridgelabz.com/api/user/uploadProfileImage";
-
     return axios.post(
       process.env.REACT_APP_BASE_URL + "/user/uploadProfileImage",
       data,
